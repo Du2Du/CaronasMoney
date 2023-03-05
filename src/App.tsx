@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import Home from "./Components/Home";
+import Home from "./Pages/Home";
+import MonthExpenses from "./Pages/MonthExpenses";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
           <Route path="/carona" element={<Home />} />
+          <Route path="/despesas" element={<MonthExpenses />} />
         </Routes>
         <Toaster position="top-center" reverseOrder={false} />
       </BrowserRouter>

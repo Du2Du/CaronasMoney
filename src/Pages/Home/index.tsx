@@ -9,6 +9,7 @@ import { monthLabels } from "../../Utils";
 import { AddExpense } from "./Components/AddExpense";
 import { HomeContainer } from "./styles";
 import { useExpense } from "./Hooks/Expense";
+import { useNavigate } from "react-router";
 
 const AddExpenseModal = WithModal(AddExpense);
 
@@ -31,6 +32,7 @@ const Home: React.FC = () => {
   const [showAddExpense, setShowAddExpense] = useState(false);
   const [values, setValues] = useState<ExpenseValues>(initialValues);
   const [atualMonthExpense, setAtualMonthExpense] = useState("0");
+  const navigator = useNavigate();
   const month = new Date().getUTCMonth() + 1;
   const currentMonth = get(monthLabels, month - 1);
   const {
@@ -59,17 +61,23 @@ const Home: React.FC = () => {
             <AiOutlinePlus size={35} />
             Adicionar Despesa de {currentMonth}
           </div>
-          <div className="card success">
+          <div
+            className="card success"
+            onClick={() => {
+              navigator("/despesas");
+            }}
+          >
             <AiFillEye size={35} />
             Visualizar Despesas Totais
           </div>
-          <div
+          <button
+            disabled
             className="card error-bg"
             onClick={deleteExpenseFromCurrentMonth}
           >
             <BiTrash size={35} />
             Deletar Despesas do Mês
-          </div>
+          </button>
         </div>
       </main>
       <AddExpenseModal
