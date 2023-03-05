@@ -71,7 +71,7 @@ const Home: React.FC = () => {
             Visualizar Despesas Totais
           </div>
           <button
-            disabled
+            // disabled
             className="card error-bg"
             onClick={deleteExpenseFromCurrentMonth}
           >
