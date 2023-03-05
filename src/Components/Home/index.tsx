@@ -1,8 +1,9 @@
 import { get } from "lodash";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { AiFillEye, AiOutlinePlus } from "react-icons/ai";
 import { FaMoneyBillWave } from "react-icons/fa";
+import { BiTrash } from "react-icons/bi";
 import { WithModal } from "../../HOC/Modal";
 import { monthLabels } from "../../Utils";
 import { AddExpense } from "./Components/AddExpense";
@@ -28,11 +29,23 @@ const initialValues = { toGo: "0", toBack: "0" };
 const Home: React.FC = () => {
   const [showAddExpense, setShowAddExpense] = useState(false);
   const [values, setValues] = useState<ExpenseValues>(initialValues);
-  const currentMonth = get(monthLabels, new Date().getUTCMonth());
+  const [atualMonthExpense, setAtualMonthExpense] = useState("0");
+  const month = new Date().getUTCMonth() + 1;
+  const currentMonth = get(monthLabels, month - 1);
   const { toBack, toGo } = values;
 
+  const deleteExpenseFromCurrentMonth = () => {
+    const expenses = JSON.parse(localStorage.getItem("allExpenses")!);
+    const newExpenses = expenses.filter(
+      (expense: ExpenseInterface) => expense.month !== month
+    );
+
+    localStorage.setItem("allExpenses", JSON.stringify(newExpenses));
+    setAtualMonthExpense("0");
+  };
+
   const createExpenseCallback = () => {
-    if ((toBack === "" && toGo === "") || toBack === "0" || toGo === "0") {
+    if ((toBack === "" && toGo === "") || (toBack === "0" && toGo === "0")) {
       setValues(initialValues);
       return toast.error("Digite algum valor!");
     }
@@ -42,11 +55,11 @@ const Home: React.FC = () => {
     );
 
     const findCurrentMonth = expenses.find(
-      (expense) => expense.month === new Date().getUTCMonth() + 1
+      (expense) => expense.month === month
     );
     if (!findCurrentMonth) {
       expenses.push({
-        month: new Date().getUTCMonth() + 1,
+        month: month,
         monthExpenses: [
           {
             day: new Date().getUTCDate(),
@@ -85,6 +98,7 @@ const Home: React.FC = () => {
       )
     );
     toast.success("Despesa adicionada com sucesso!");
+    allExpensesFromCurrentMonth();
     setValues(initialValues);
   };
 
@@ -93,16 +107,26 @@ const Home: React.FC = () => {
       localStorage.getItem("allExpenses")!
     );
     const currentExpensesMonth = expenses.find(
-      (expense) => expense.month === new Date().getUTCMonth() + 1
+      (expense) => expense.month === month
     );
-    if (currentExpensesMonth)
-      return formatter.format(
-        currentExpensesMonth.monthExpenses.reduce((acc, expense) => {
-          return Number(acc) + Number(expense.toGo) + Number(expense.toBack);
-        }, 0)
+
+    if (currentExpensesMonth) {
+      setAtualMonthExpense(
+        formatter.format(
+          currentExpensesMonth.monthExpenses.reduce((acc, expense) => {
+            return Number(acc) + Number(expense.toGo) + Number(expense.toBack);
+          }, 0)
+        )
       );
-    return formatter.format(0);
+      return;
+    }
+    setAtualMonthExpense(formatter.format(0));
   };
+
+  useEffect(() => {
+    allExpensesFromCurrentMonth();
+  }, []);
+
   return (
     <HomeContainer>
       <header>
@@ -113,15 +137,22 @@ const Home: React.FC = () => {
         <div className="cards">
           <div className="card error">
             <FaMoneyBillWave size={35} />
-            Despesa Atual de {currentMonth}: R$ {allExpensesFromCurrentMonth()}
+            Despesa Atual de {currentMonth}: R$ {atualMonthExpense}
           </div>
           <div className="card " onClick={() => setShowAddExpense(true)}>
             <AiOutlinePlus size={35} />
             Adicionar Despesa de {currentMonth}
           </div>
-          <div className="card success" onClick={() => console.log("ola")}>
+          <div className="card success">
             <AiFillEye size={35} />
             Visualizar Despesas Totais
+          </div>
+          <div
+            className="card error-bg"
+            onClick={deleteExpenseFromCurrentMonth}
+          >
+            <BiTrash size={35} />
+            Deletar Despesas do Mês
           </div>
         </div>
       </main>

@@ -14,7 +14,7 @@ export const AddExpense: React.FC<{
     (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
       setValues((pastValue) => ({
         ...pastValue,
-        [field]: String(Number(e.target.value).toFixed(2)),
+        [field]: Number(e.target.value),
       }));
     };
 

@@ -56,6 +56,10 @@ export const HomeContainer = styled.div`
   .error {
     color: #dc3545;
   }
+  .error-bg {
+    color: #fff;
+    background: #dc3545 !important;
+  }
 
   .success {
     color: #198754;

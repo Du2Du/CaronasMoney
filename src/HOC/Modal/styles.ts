@@ -17,7 +17,7 @@ export const ModalContainer = styled.div`
     2px 8px 4px rgba(0, 0, 0, 0.09), 2px 16px 8px rgba(0, 0, 0, 0.09),
     2px 32px 16px rgba(0, 0, 0, 0.09);
 
-  header {
+  .header {
     border-radius: 6px 6px 0 0;
     padding: 10px;
     display: flex;
@@ -29,7 +29,7 @@ export const ModalContainer = styled.div`
     width: 100%;
   }
 
-  header .closeButton {
+  .header .closeButton {
     cursor: pointer;
     border: 1px solid #fff;
     border-radius: 4px;

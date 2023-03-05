@@ -1,5 +1,7 @@
+import { useRef } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { ModalContainer } from "./styles";
+import { useOutsideAlerter } from "./Utils";
 
 interface ModalProps {
   children?: React.ReactNode;
@@ -13,18 +15,18 @@ interface ModalProps {
 export const WithModal =
   <T extends unknown>(Component: React.FC<T>) =>
   (props: ModalProps & T) => {
+    const modalRef = useRef<any>(null);
     const { label, isOpen, setIsOpen, callback, onHide } = props;
+    const hideModal = () => {
+      setIsOpen(false);
+      if (onHide) onHide();
+    };
+    useOutsideAlerter(modalRef, hideModal);
     return !isOpen ? null : (
-      <ModalContainer>
-        <header>
+      <ModalContainer ref={modalRef}>
+        <header className="header">
           {label}
-          <div
-            className="closeButton"
-            onClick={() => {
-              setIsOpen(false);
-              if (onHide) onHide();
-            }}
-          >
+          <div className="closeButton" onClick={hideModal}>
             <AiOutlineClose size={20} />
           </div>
         </header>
@@ -32,7 +34,7 @@ export const WithModal =
           <Component {...props} />
         </section>
         <footer>
-          <button onClick={() => setIsOpen(false)}>Fechar</button>
+          <button onClick={hideModal}>Fechar</button>
           <button
             className="buttonSuccess"
             onClick={() => {
