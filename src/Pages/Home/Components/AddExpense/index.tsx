@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { get } from "lodash";
-import { monthLabels } from "../../../../Utils";
 import { AddExpenseContainer } from "./styles";
 import { ExpenseValues } from "../..";
+import { monthLabels } from "../../../../Utils/Months";
 
 export const AddExpense: React.FC<{
   values: ExpenseValues;

@@ -21,7 +21,7 @@
 
 body {
   background: #e4e5f1;
-  color: #484b6a;
+  color: #000;
   margin: 0;
   display: flex;
   place-items: center;
@@ -31,7 +31,7 @@ body {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #0000;
     background-color: #ffffff;
   }
 }

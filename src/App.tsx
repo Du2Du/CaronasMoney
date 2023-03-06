@@ -12,8 +12,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/carona" element={<Home />} />
-          <Route path="/despesas" element={<MonthExpenses />} />
+          <Route path="/car-ride" element={<Home />} />
+          <Route path="/my-expenses" element={<MonthExpenses />} />
         </Routes>
         <Toaster position="top-center" reverseOrder={false} />
       </BrowserRouter>
