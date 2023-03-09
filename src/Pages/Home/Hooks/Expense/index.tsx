@@ -67,9 +67,7 @@ export const useExpense = (
           ? expenses
           : expenses.map((expense) => {
               if (expense.month === findCurrentMonth.month) {
-                return {
-                  findCurrentMonth,
-                };
+                return findCurrentMonth;
               }
               return expense;
             })
