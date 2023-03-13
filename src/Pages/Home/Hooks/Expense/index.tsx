@@ -9,7 +9,7 @@ export const useExpense = (
   setValues: (value: any) => void,
   values: any
 ) => {
-  const month = new Date().getUTCMonth() + 1;
+  const month = new Date().getMonth() + 1;
   const { toBack, toGo } = values;
 
   const deleteExpenseFromCurrentMonth = () => {
@@ -40,14 +40,14 @@ export const useExpense = (
         month: month,
         monthExpenses: [
           {
-            day: new Date().getUTCDate(),
+            day: new Date().getDate(),
             ...values,
           },
         ],
       });
     } else if (
       findCurrentMonth.monthExpenses.find(
-        (expense) => expense.day === new Date().getUTCDate()
+        (expense) => expense.day === new Date().getDate()
       )
     ) {
       setValues(initialValues);
@@ -57,7 +57,7 @@ export const useExpense = (
     if (findCurrentMonth)
       findCurrentMonth.monthExpenses.push({
         ...values,
-        day: new Date().getUTCDate(),
+        day: new Date().getDate(),
       });
 
     localStorage.setItem(
