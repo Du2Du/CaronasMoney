@@ -16,6 +16,7 @@ const AddExpenseModal = WithModal(AddExpense);
 export interface ExpenseValues {
   toGo: string;
   toBack: string;
+  day: string;
 }
 
 export interface ExpenseInterface {
@@ -26,7 +27,11 @@ export interface ExpenseInterface {
     } & ExpenseValues
   ];
 }
-const initialValues = { toGo: "0", toBack: "0" };
+const initialValues = {
+  toGo: "0",
+  toBack: "0",
+  day: String(new Date().getDate()),
+};
 
 const Home: React.FC = () => {
   const [showAddExpense, setShowAddExpense] = useState(false);

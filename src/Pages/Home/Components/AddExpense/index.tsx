@@ -7,7 +7,7 @@ import { ExpenseValues } from "../..";
 export const AddExpense: React.FC<{
   values: ExpenseValues;
   setValues: React.Dispatch<React.SetStateAction<ExpenseValues>>;
-}> = ({ values: { toBack, toGo }, setValues }) => {
+}> = ({ values: { toBack, toGo, day }, setValues }) => {
   const month = get(monthLabels, new Date().getMonth());
 
   const changeValue =
@@ -21,6 +21,15 @@ export const AddExpense: React.FC<{
   return (
     <AddExpenseContainer>
       <h2>Adicionar Despesa ao mês de {month}:</h2>
+      <div className="field ">
+        <label htmlFor="day">Dia</label>
+        <input
+          onChange={changeValue("day")}
+          type="number"
+          value={day}
+          id="day"
+        />
+      </div>
       <div className="fields">
         <div className="field">
           <label htmlFor="toGo">Ida</label>

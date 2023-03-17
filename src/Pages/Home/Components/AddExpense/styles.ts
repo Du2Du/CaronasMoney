@@ -11,7 +11,7 @@ export const AddExpenseContainer = styled.div`
     width: 100%;
     flex-direction: row;
   }
-  .fields .field{
+ .field{
     width: 50%;
     display: flex;
     align-items: center;
@@ -19,11 +19,11 @@ export const AddExpenseContainer = styled.div`
     flex-direction: column;
   }
 
-  .fields .field label{
+ .field label{
     font-size: 30px;
   }
 
-  .fields .field input{
+ .field input{
     padding: 10px;
     border-radius: 16px;
     border: 1px solid #a9a9a9;
